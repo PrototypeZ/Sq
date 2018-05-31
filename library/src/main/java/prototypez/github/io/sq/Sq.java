@@ -2,9 +2,13 @@ package prototypez.github.io.sq;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import prototypez.github.io.sq.fragment.ActivityResultFragment;
@@ -138,6 +142,77 @@ public class Sq {
             intent.putExtra(SqConstant.KEY_REQUEST_CONTEXT_DATA, requestContextData);
         }
         ActivityResultFragment.startActivityForResult(fragment, intent, requestCode);
+    }
+
+    // endregion
+
+    // region findOrCreateFragment
+
+    public  static <T extends android.support.v4.app.Fragment> T findOrCreateFragment(@NonNull Class<T> v4FragmentClass, AppCompatActivity activity, String tag) {
+        android.support.v4.app.FragmentManager v4FragmentManager = activity.getSupportFragmentManager();
+        T v4Fragment = (T) v4FragmentManager.findFragmentByTag(tag);
+        if (v4Fragment == null) {
+            try {
+                v4Fragment = v4FragmentClass.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return v4Fragment;
+    }
+
+    public  static <T extends Fragment> T findOrCreateFragment(@NonNull Class<T> fragmentClass, Activity activity, String tag) {
+        FragmentManager fragmentManager = activity.getFragmentManager();
+        T fragment = (T) fragmentManager.findFragmentByTag(tag);
+        if (fragment == null) {
+            try {
+                fragment = fragmentClass.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return fragment;
+    }
+
+    // endregion
+
+    // region push
+
+    public static void push(AppCompatActivity activity, android.support.v4.app.Fragment v4Fragment, String tag) {
+        List<android.support.v4.app.Fragment> currentFragments = activity.getSupportFragmentManager().getFragments();
+        android.support.v4.app.FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+        if (currentFragments.size() != 0) {
+            transaction.setCustomAnimations(
+                    R.anim.push_in_left,
+                    R.anim.push_out_left,
+                    R.anim.push_in_right,
+                    R.anim.push_out_right
+            );
+        }
+        transaction.add(R.id.fragment_container, v4Fragment, tag);
+        if (currentFragments.size() != 0) {
+            transaction
+                    .hide(currentFragments.get(currentFragments.size() - 1))
+                    .addToBackStack(tag);
+        }
+        transaction.commit();
+    }
+
+    public static void push(AppCompatActivity activity, android.support.v4.app.Fragment v4Fragment) {
+        push(activity, v4Fragment, v4Fragment.getClass().getCanonicalName());
+    }
+
+    // TODO 支持普通 Activity
+    public static void push(Activity activity, Fragment fragment, String tag) {
+        throw new RuntimeException("Not supported currently, Please use AppCompatActivity as host instead.");
+    }
+
+    public static void push(Activity activity, Fragment fragment) {
+        push(activity, fragment, fragment.getClass().getCanonicalName());
     }
 
     // endregion
