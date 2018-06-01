@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="103dp"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="126dp"
+        android:layout_height="83dp"
+        android:paddingRight="10dp"
+        android:scaleType="fitXY"
+        tools:src="@drawable/t1" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="电视剧西游记挣了多少钱？"
+        android:maxLines="2"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:layout_toRightOf="@+id/image" />
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="50 评论"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/image" />
+
+    <ImageView
+        android:id="@+id/fav_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_toRightOf="@+id/comment"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="3dp"
+        tools:src="@drawable/favorite"/>
+
+    <TextView
+        android:id="@+id/favor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        tools:text="50"
+        android:layout_toRightOf="@+id/fav_icon" />
+</RelativeLayout>
