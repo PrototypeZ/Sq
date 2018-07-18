@@ -5,9 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LoginBySmsActivity">
+    tools:context=".LoginActivity">
 
     <TextView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:text="@string/title_activity_login_by_sms"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:paddingLeft="15dp"
+        android:gravity="left|center"
+        android:fitsSystemWindows="true"
+
+        />
+
+    <TextView
+        android:id="@+id/hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

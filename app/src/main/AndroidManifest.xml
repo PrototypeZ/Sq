@@ -22,11 +22,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity
-            android:name=".LoginBySmsActivity"
-            android:label="@string/title_activity_login_by_sms" />
+            android:name=".LoginActivity"/>
+
         <activity android:name=".AuthActivity"
             android:label="@string/title_activity_auth"/>
     </application>

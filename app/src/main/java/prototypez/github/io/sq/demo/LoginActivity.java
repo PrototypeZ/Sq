@@ -10,45 +10,73 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import prototypez.github.io.sq.activity.SqActivity;
+import prototypez.github.io.sq.demo.entity.User;
+import prototypez.github.io.sq.demo.fragment.LoginByPwdFragment;
+import prototypez.github.io.sq.demo.fragment.LoginBySmsFragment;
 
 /**
- * A login screen that offers login via email/password.
+ * 登陆流程 Interface
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends SqActivity {
 
-    // UI references.
-    private EditText mPhoneView;
-    private EditText mPasswordView;
+    LoginByPwdFragment loginByPwdFragment;
+    LoginBySmsFragment loginBySmsFragment;
+
+    User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        // Set up the login form.
-        mPhoneView = findViewById(R.id.phone);
 
-        mPasswordView = findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        loginByPwdFragment = findOrCreateFragment(LoginByPwdFragment.class);
+        loginBySmsFragment = findOrCreateFragment(LoginBySmsFragment.class);
+
+        if (savedInstanceState == null) {
+            push(loginByPwdFragment);
+        } else {
+            mUser = (User) savedInstanceState.getSerializable("user");
+        }
+
+        // Flow control logic
+
+        loginByPwdFragment.setLoginCallback(new LoginByPwdFragment.LoginByPwdCallback() {
             @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-//                    attemptLogin();
-                    return true;
-                }
-                return false;
+            public void onLoginOk(boolean needSmsVerify, User user) {
+                Toast
+                        .makeText(
+                                LoginActivity.this,
+                                user.nickName + ", 检测到异地登录，为保证您的安全，请先验证短信验证码",
+                                Toast.LENGTH_LONG)
+                        .show();
+
+
+                loginBySmsFragment.setParams(user);
+                push(loginBySmsFragment);
             }
         });
 
-        Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        loginBySmsFragment.setLoginBySmsCallback(new LoginBySmsFragment.LoginBySmsCallback() {
             @Override
-            public void onClick(View view) {
-//                attemptLogin();
+            public void onLoginOk(User user) {
+                Toast
+                        .makeText(
+                                LoginActivity.this,
+                                user.nickName + " 登录成功！",
+                                Toast.LENGTH_LONG)
+                        .show();
+                finish();
             }
         });
-
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("user", mUser);
+    }
 }
 
 
