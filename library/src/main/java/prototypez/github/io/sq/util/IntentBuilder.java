@@ -1,5 +1,6 @@
 package prototypez.github.io.sq.util;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -12,10 +13,14 @@ import java.util.ArrayList;
  */
 public class IntentBuilder {
 
-    private Intent mIntent = new Intent();
+    private Intent mIntent;
 
     public static IntentBuilder newInstance() {
         return new IntentBuilder();
+    }
+
+    public static IntentBuilder newInstance(Context context, Class<?> clazz) {
+        return new IntentBuilder(context, clazz);
     }
 
     public IntentBuilder putExtra(String key, boolean value) {
@@ -188,6 +193,10 @@ public class IntentBuilder {
     }
 
     private IntentBuilder() {
+        mIntent = new Intent();
+    }
 
+    private IntentBuilder(Context context, Class<?> clazz) {
+        mIntent = new Intent(context, clazz);
     }
 }
