@@ -11,7 +11,7 @@ import prototypez.github.io.sq.ActivityResult;
 
 /**
  * 支持在 AppCompatActivity 和 SupportFragment 中的流程封装
- *
+ * <p>
  * Created by zhounl on 2017/6/19.
  */
 
@@ -43,7 +43,7 @@ public class SupportActivityResultFragment extends Fragment {
     }
 
     public static Observable<ActivityResult> getActivityResultObservable(Fragment f) {
-         FragmentManager fragmentManager = f.getChildFragmentManager();
+        FragmentManager fragmentManager = f.getChildFragmentManager();
         SupportActivityResultFragment fragment = (SupportActivityResultFragment) fragmentManager.findFragmentByTag(
                 SupportActivityResultFragment.class.getCanonicalName());
         if (fragment == null) {
@@ -62,7 +62,7 @@ public class SupportActivityResultFragment extends Fragment {
 
     public static void insertActivityResult(AppCompatActivity activity, ActivityResult activityResult) {
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
-        SupportActivityResultFragment fragment= (SupportActivityResultFragment) fragmentManager.findFragmentByTag(
+        SupportActivityResultFragment fragment = (SupportActivityResultFragment) fragmentManager.findFragmentByTag(
                 SupportActivityResultFragment.class.getCanonicalName());
         if (fragment == null) {
             fragment = new SupportActivityResultFragment();
@@ -97,16 +97,26 @@ public class SupportActivityResultFragment extends Fragment {
         SupportActivityResultFragment fragment = (SupportActivityResultFragment) fragmentManager.findFragmentByTag(
                 SupportActivityResultFragment.class.getCanonicalName());
         if (fragment == null) {
-            activity.startActivityForResult(intent, requestCode);
-        } else {
-            fragment.startActivityForResult(intent, requestCode);
+            fragment = new SupportActivityResultFragment();
+            fragmentManager.beginTransaction()
+                    .add(fragment, SupportActivityResultFragment.class.getCanonicalName())
+                    .commit();
+            fragmentManager.executePendingTransactions();
         }
+        fragment.startActivityForResult(intent, requestCode);
     }
 
     public static void startActivityForResult(Fragment f, Intent intent, int requestCode) {
         FragmentManager fragmentManager = f.getChildFragmentManager();
         SupportActivityResultFragment fragment = (SupportActivityResultFragment) fragmentManager.findFragmentByTag(
                 SupportActivityResultFragment.class.getCanonicalName());
+        if (fragment == null) {
+            fragment = new SupportActivityResultFragment();
+            fragmentManager.beginTransaction()
+                    .add(fragment, SupportActivityResultFragment.class.getCanonicalName())
+                    .commit();
+            fragmentManager.executePendingTransactions();
+        }
         fragment.startActivityForResult(intent, requestCode);
     }
 

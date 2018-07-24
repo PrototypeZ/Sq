@@ -96,16 +96,26 @@ public class ActivityResultFragment extends Fragment {
         ActivityResultFragment fragment = (ActivityResultFragment) fragmentManager.findFragmentByTag(
                 ActivityResultFragment.class.getCanonicalName());
         if (fragment == null) {
-            activity.startActivityForResult(intent, requestCode);
-        } else {
-            fragment.startActivityForResult(intent, requestCode);
+            fragment = new ActivityResultFragment();
+            fragmentManager.beginTransaction()
+                    .add(fragment, ActivityResultFragment.class.getCanonicalName())
+                    .commit();
+            fragmentManager.executePendingTransactions();
         }
+        fragment.startActivityForResult(intent, requestCode);
     }
 
     public static void startActivityForResult(Fragment f, Intent intent, int requestCode) {
         FragmentManager fragmentManager = f.getChildFragmentManager();
         ActivityResultFragment fragment = (ActivityResultFragment) fragmentManager.findFragmentByTag(
                 ActivityResultFragment.class.getCanonicalName());
+        if (fragment == null) {
+            fragment = new ActivityResultFragment();
+            fragmentManager.beginTransaction()
+                    .add(fragment, ActivityResultFragment.class.getCanonicalName())
+                    .commit();
+            fragmentManager.executePendingTransactions();
+        }
         fragment.startActivityForResult(intent, requestCode);
     }
 
