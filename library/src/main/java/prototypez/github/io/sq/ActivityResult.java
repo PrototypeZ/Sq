@@ -24,6 +24,9 @@ public class ActivityResult {
             if (requestData == null) {
                 requestData = new Bundle();
             }
+            if (data == null) {
+                data = new Intent();
+            }
             requestData.putBundle(SqConstant.KEY_REQUEST_CONTEXT_DATA, requestContextData);
             data.putExtra(SqConstant.KEY_REQUEST_DATA, requestData);
         }
