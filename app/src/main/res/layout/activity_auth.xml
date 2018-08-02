@@ -5,7 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".AuthActivity">
+    tools:context=".processes.auth.AuthActivity">
+
+    <TextView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:text="实名认证"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:paddingLeft="15dp"
+        android:gravity="left|center"
+        android:fitsSystemWindows="true"
+        />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,25 +32,26 @@
             android:src="@drawable/auth"/>
     </RelativeLayout>
     <EditText
-        android:id="@+id/id_card"
+        android:id="@+id/et_id_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="身份证号"
+        android:text="360822198305022623"
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:singleLine="true" />
 
     <EditText
-        android:id="@+id/real_name"
+        android:id="@+id/et_real_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="真是姓名"
+        android:hint="张全蛋"
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:singleLine="true" />
 
     <Button
-        android:id="@+id/email_sign_in_button"
+        android:id="@+id/btn_confirm"
         style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

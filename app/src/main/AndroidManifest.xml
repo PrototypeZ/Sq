@@ -17,15 +17,24 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"/>
+            android:name=".processes.login.LoginActivity"/>
 
-        <activity android:name=".AuthActivity"
+        <!-- 评论流程 -->
+        <activity android:name=".processes.comment.CommentActivity"/>
+
+        <!-- 实名认证流程-->
+        <activity android:name=".processes.auth.AuthActivity"
             android:label="@string/title_activity_auth"/>
+
+        <!-- 密码重置流程 -->
+        <activity android:name=".processes.pwdReset.PwdResetActivity"/>
+
+        <!-- 注册流程 -->
+        <activity android:name=".processes.register.RegisterActivity"/>
     </application>
 
 </manifest>

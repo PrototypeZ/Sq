@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:text="@string/title_activity_login"
+        android:text="设置密码"
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:paddingLeft="15dp"
@@ -38,12 +38,12 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/et_phone"
+                android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="手机号"
-                android:inputType="textEmailAddress"
-                android:text="13012345678"
+                android:hint="请设置密码"
+                android:inputType="textPassword"
+                android:text="123456"
                 android:maxLines="1"
                 android:singleLine="true" />
 
@@ -54,10 +54,10 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/et_password"
+                android:id="@+id/et_password_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="密码"
+                android:hint="请再输入一遍"
                 android:text="123456"
                 android:imeActionId="6"
                 android:imeOptions="actionUnspecified"
@@ -68,31 +68,13 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/sign_in"
+            android:id="@+id/btn_confirm"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="登陆"
+            android:text="完成"
             android:textStyle="bold" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            >
-            <TextView
-                android:id="@+id/tv_reset_pwd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="忘记密码"/>
-
-            <TextView
-                android:id="@+id/tv_register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="注册"/>
-        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
