@@ -18,7 +18,6 @@ public class ActivityResult {
     public ActivityResult(int requestCode, int resultCode, Intent data, Bundle requestData, Bundle requestContextData) {
         this.requestCode = requestCode;
         this.resultCode = resultCode;
-        this.data = data;
 
         if (requestData != null || requestContextData != null) {
             if (requestData == null) {
@@ -30,6 +29,7 @@ public class ActivityResult {
             requestData.putBundle(SqConstant.KEY_REQUEST_CONTEXT_DATA, requestContextData);
             data.putExtra(SqConstant.KEY_REQUEST_DATA, requestData);
         }
+        this.data = data;
     }
 
     public int getRequestCode() {
