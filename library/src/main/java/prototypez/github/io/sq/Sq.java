@@ -3,6 +3,7 @@ package prototypez.github.io.sq;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,7 +18,6 @@ import prototypez.github.io.sq.fragment.SupportActivityResultFragment;
 public class Sq {
 
     // region setResult
-    // 无论从 Fragment 还是从 Activity 启动 startActivityForResult, 都只能在 Activity 内部 setResult
 
     public static void setResult(AppCompatActivity activity, int resultCode) {
         setResult(activity, resultCode, null);
@@ -206,7 +206,7 @@ public class Sq {
         push(activity, v4Fragment, v4Fragment.getClass().getCanonicalName());
     }
 
-    // TODO 支持普通 Activity
+    // TODO Support Plain Activity
     public static void push(Activity activity, Fragment fragment, String tag) {
         throw new RuntimeException("Not supported currently, Please use AppCompatActivity as host instead.");
     }

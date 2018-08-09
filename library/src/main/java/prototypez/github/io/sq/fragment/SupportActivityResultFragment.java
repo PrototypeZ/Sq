@@ -10,7 +10,7 @@ import io.reactivex.subjects.BehaviorSubject;
 import prototypez.github.io.sq.ActivityResult;
 
 /**
- * 支持在 AppCompatActivity 和 SupportFragment 中的流程封装
+ * Encapsulate startActivityForResult and onActivityResult with Fragment
  * <p>
  * Created by zhounl on 2017/6/19.
  */

@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Bundle 助手类
+ * Bundle Helper
  * Created by zhounl on 2017/10/24.
  */
 

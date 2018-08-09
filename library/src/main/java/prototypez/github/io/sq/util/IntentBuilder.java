@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Intent 助手类
+ * Intent Helper
  */
 public class IntentBuilder {
 

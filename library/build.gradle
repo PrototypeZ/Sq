@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 27
@@ -22,6 +23,15 @@ android {
         }
     }
 
+}
+
+publish {
+    userOrg = 'prototypez'
+    groupId = 'io.github.prototypez'
+    artifactId = 'sq'
+    publishVersion = '1.0'
+    desc = 'Comfortable way to use startActivityForResult and onActivityResult with RxJava!'
+    website = 'https://github.com/PrototypeZ/Sq'
 }
 
 dependencies {
