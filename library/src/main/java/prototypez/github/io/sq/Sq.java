@@ -3,9 +3,10 @@ package prototypez.github.io.sq;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.AnimRes;
+import android.support.annotation.AnimatorRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
@@ -16,6 +17,28 @@ import prototypez.github.io.sq.fragment.ActivityResultFragment;
 import prototypez.github.io.sq.fragment.SupportActivityResultFragment;
 
 public class Sq {
+
+    @AnimatorRes @AnimRes
+    private static int enter = R.anim.sq_push_in_left;
+    @AnimatorRes @AnimRes
+    private static int exit = R.anim.sq_push_out_left;
+    @AnimatorRes @AnimRes
+    private static int popEnter = R.anim.sq_push_in_right;
+    @AnimatorRes @AnimRes
+    private static int popExit = R.anim.sq_push_out_right;
+
+    /**
+     * set Fragment Push-in Pop-out Animation
+     */
+    public static void setFragmentAnimation(@AnimatorRes @AnimRes int enter,
+                                            @AnimatorRes @AnimRes int exit,
+                                            @AnimatorRes @AnimRes int popEnter,
+                                            @AnimatorRes @AnimRes int popExit) {
+        Sq.enter = enter;
+        Sq.exit = exit;
+        Sq.popEnter = popEnter;
+        Sq.popExit = popExit;
+    }
 
     // region setResult
 
@@ -187,10 +210,10 @@ public class Sq {
         android.support.v4.app.FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         if (currentFragments.size() != 0) {
             transaction.setCustomAnimations(
-                    R.anim.push_in_left,
-                    R.anim.push_out_left,
-                    R.anim.push_in_right,
-                    R.anim.push_out_right
+                    enter,
+                    exit,
+                    popEnter,
+                    popExit
             );
         }
         transaction.add(R.id.fragment_container, v4Fragment, tag);
