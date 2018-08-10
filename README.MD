@@ -9,7 +9,7 @@
 
 ## 从 Activity 中得到一个结果
 
-以登录流程为例，App 中会有很多位置触发登录操作, 例如点赞操作：
+以登录流程为例，App 中会有很多操作会触发登录流程, 例如点赞操作：
 
 ```kotlin
 
@@ -39,6 +39,8 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 
 ```
 
+上面的写法，虽然可以正常工作，但是显得过于散乱，我们使用 **Sq** 来优化代码。
+
 ## 使用 Sq 调用登录流程
 
 使用 `compose` 操作符，在点击事件与点赞操作之间插入登录检测操作：
@@ -67,6 +69,19 @@ fun <T> ensureLogin(activity: AppCompatActivity): ObservableTransformer<T, Activ
     }
 }
 ```
+
+## 集成
+
+```groovy
+dependencies {
+    // other dependencies
+    // ...
+    implementation 'io.github.prototypez:sq:${latest_version}'
+}
+
+```
+
+当前最新版本：[ ![Download](https://api.bintray.com/packages/prototypez/maven/sq/images/download.svg) ](https://bintray.com/prototypez/maven/sq/_latestVersion)
 
 ## 高级用法
 
