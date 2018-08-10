@@ -10,15 +10,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import io.github.prototypez.savestate.core.annotation.AutoRestore
-
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.activity_main.*
 import prototypez.github.io.sq.demo.entity.Item
 import prototypez.github.io.sq.demo.processes.auth.AuthActivity
 import prototypez.github.io.sq.demo.processes.comment.CommentActivity
 import prototypez.github.io.sq.demo.processes.login.LoginActivity
 import prototypez.github.io.sq.util.BundleBuilder
-
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * 评论操作，绑定登录流程的 RequestCode

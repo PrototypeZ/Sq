@@ -5,19 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.jakewharton.rxbinding2.view.RxView
-import io.github.prototypez.savestate.core.annotation.AutoRestore
 import io.reactivex.ObservableTransformer
 import prototypez.github.io.sq.ActivityResult
 import prototypez.github.io.sq.Sq
 import prototypez.github.io.sq.activity.SqActivity
-import prototypez.github.io.sq.demo.entity.User
 import prototypez.github.io.sq.demo.processes.login.steps.LoginByPwdFragment
 import prototypez.github.io.sq.demo.processes.login.steps.LoginBySmsFragment
 import prototypez.github.io.sq.demo.util.LoginInfo
 import prototypez.github.io.sq.util.IntentBuilder
-import java.io.Serializable
-import java.util.*
 
 /**
  * 登陆流程
@@ -128,6 +123,37 @@ class LoginActivity : SqActivity() {
                         .filter { ar -> ar.requestCode == requestCode }
                         .filter { ar -> ar.resultCode == Activity.RESULT_OK }
                         .map { it.requestContextData }
+            }
+        }
+
+        /**
+         * 确保已登录，不需要保存流程触发点的上下文的简单情况
+         */
+        fun <T> ensureLogin(activity: AppCompatActivity): ObservableTransformer<T, ActivityResult> {
+            return ObservableTransformer { upstream ->
+                upstream.subscribe { _ ->
+                    if (LoginInfo.isLogin) {
+                        Sq.insertActivityResult(activity,
+                                ActivityResult(
+                                        REQUEST_LOGIN,
+                                        Activity.RESULT_OK,
+                                        IntentBuilder.newInstance()
+                                                .putExtra("user", LoginInfo.currentLoginUser)
+                                                .build()
+                                )
+                        )
+                    } else {
+                        Sq.startActivityForResult(
+                                activity,
+                                makeIntentForLogin(activity),
+                                REQUEST_LOGIN
+                        )
+                    }
+                }
+
+                Sq.obtainActivityResult(activity)
+                        .filter { ar -> ar.requestCode == REQUEST_LOGIN }
+                        .filter { ar -> ar.resultCode == Activity.RESULT_OK }
             }
         }
 
