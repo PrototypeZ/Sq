@@ -43,7 +43,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 
 ## 使用 Sq 调用登录流程
 
-使用 `compose` 操作符，在点击事件与点赞操作之间插入登录检测操作：
+使用 `RxJava` 中的 `compose` 操作符，在点击事件与点赞操作之间插入登录检测操作：
 
 ```kotlin
 RxView.clicks(likeBtn)
@@ -171,7 +171,7 @@ btnLike
 首先约定:
 1. 一个业务流程对应一个 `Activity` , 这个流程内部的所有步骤都由 `Fragment` 来实现;
 2. `Fragment` 负责完成本步骤应该完成的任务，并把本步骤的结果通知 `Activity`;
-3. `Activity` 负责整个流程对外接口，同时负责收集各步骤的结果，步骤之间的流转调度以及结束流程;
+3. `Activity` 负责整个流程对外接口，同时负责收集各步骤的结果，进行步骤之间的流转调度以及结束流程;
 
 `Fragment` 可以由你自己实现， **Sq** 提供了 `SqActivity` 类，帮助你实现上面约定中的 `Activity`，你可以从 `SqActivity` 继承下来， 实现你自己的业务流程的 `Activity` 。下面以一个带短信验证码的两步验证的登录流程为例：
 
