@@ -166,6 +166,72 @@ btnLike
     .subscribe {_ -> doLike()}
 ```
 
+## 流程内部步骤封装
+
+首先约定:
+1. 一个业务流程对应一个 `Activity` , 这个流程内部的所有步骤都由 `Fragment` 来实现;
+2. `Fragment` 负责完成本步骤应该完成的任务，并把本步骤的结果通知 `Activity`;
+3. `Activity` 负责整个流程对外接口，同时负责收集各步骤的结果，步骤之间的流转调度以及结束流程;
+
+`Fragment` 可以由你自己实现， **Sq** 提供了 `SqActivity` 类，帮助你实现上面约定中的 `Activity`，你可以从 `SqActivity` 继承下来， 实现你自己的业务流程的 `Activity` 。下面以一个带短信验证码的两步验证的登录流程为例：
+
+```kotlin
+class LoginActivity : SqActivity() {
+
+    private lateinit var loginByPwdFragment: LoginByPwdFragment
+    private lateinit var loginBySmsFragment: LoginBySmsFragment
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        loginByPwdFragment = findOrCreateFragment(LoginByPwdFragment::class.java)
+        loginBySmsFragment = findOrCreateFragment(LoginBySmsFragment::class.java)
+
+        // 第一步，进入用户名密码验证界面
+        if (savedInstanceState == null) {
+            push(loginByPwdFragment)
+        }
+
+        // 第一步用户名密码验证的结果回调
+        loginByPwdFragment.loginByPwdCallback = { needSmsVerify, user ->
+            if (needSmsVerify) {
+                // 进入第二步，短信验证步骤
+                loginBySmsFragment.setParams(user)
+                push(loginBySmsFragment)
+            } else {
+                // 直接登录成功，流程结束
+                LoginInfo.currentLoginUser = user
+                Sq.setResult(
+                        this@LoginActivity,
+                        Activity.RESULT_OK,
+                        IntentBuilder.newInstance()
+                                .putExtra("user", user)
+                                .build()
+                )
+                finish()
+            }
+        }
+
+        // 第二步短信验证的结果回调
+        loginBySmsFragment.loginBySmsCallback =  { user ->
+            // 验证成功，登录成功，流程结束
+            LoginInfo.currentLoginUser = user
+            Sq.setResult(
+                    this@LoginActivity,
+                    Activity.RESULT_OK,
+                    IntentBuilder.newInstance()
+                            .putExtra("user", user)
+                            .build()
+            )
+            finish()
+        }
+    }
+}
+```
+
+如果你不希望从 `SqActivity` 继承，你也可以从自己的 `Activity` 继承下来，`SqActivity` 只是提供了 `push` 和 `findOrCreateFragment` 这两个方法以供调用， 这两个方法同样存在于 `Sq` 这个类里，你也可以手动调用。
+
+如果你并不想遵守上面的约定来封装业务流程，你可以仅仅只把 **Sq** 当成一个 `startActivityForResult` 的工具类。
 
 ## 参考资料
 
