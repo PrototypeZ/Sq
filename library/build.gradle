@@ -29,7 +29,7 @@ publish {
     userOrg = 'prototypez'
     groupId = 'io.github.prototypez'
     artifactId = 'sq'
-    publishVersion = '1.1'
+    publishVersion = '1.2'
     desc = 'Comfortable way to use startActivityForResult and onActivityResult with RxJava!'
     website = 'https://github.com/PrototypeZ/Sq'
 }
