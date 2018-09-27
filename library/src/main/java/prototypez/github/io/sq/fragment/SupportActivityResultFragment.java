@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import io.reactivex.Observable;
-import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
 import prototypez.github.io.sq.ActivityResult;
 
 /**
@@ -17,7 +17,7 @@ import prototypez.github.io.sq.ActivityResult;
 
 public class SupportActivityResultFragment extends Fragment {
 
-    private final BehaviorSubject<ActivityResult> mActivityResultSubject = BehaviorSubject.create();
+    private final PublishSubject<ActivityResult> mActivityResultSubject = PublishSubject.create();
 
 
     @Override
